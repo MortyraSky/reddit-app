@@ -3,14 +3,15 @@ import PostsBlock from './components/PostsBlock/postsBlock';
 import FavoritedBlock from './components/FavoritedBlock/favoritedBlock';
 import debounce from './helpfullFunctions/debounce';
 import getPosts from "./ApiServices/getPosts";
+import useLocalStorage from './hooks/useLocalStorage';
 import cats from './cats.png';
 import './App.css';
 
 const App = () => {
   const [posts, setPosts] = React.useState([]);
-  const [favoritedPosts, setFavoritedPost] = React.useState([]);
   const [after, setAfter] = React.useState('');
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const [favoritedPosts, setFavoritedPosts] = useLocalStorage('favorite');
 
   React.useEffect(() => {
     const proxy = "https://cors-anywhere.herokuapp.com/";
@@ -61,19 +62,22 @@ const App = () => {
   const addToFavorite = (index) => {
     console.log(index);
     let buff = [...favoritedPosts];
-    let inFavoritedPos = buff.findIndex((item) => {
+    let inFavoritedPos = favoritedPosts?.findIndex((item) => {
       return item.data.id === posts[index].data.id
     });
     if (inFavoritedPos === -1) {
       buff.push(posts[index]);
-      setFavoritedPost(buff);
+      setFavoritedPosts(buff);
     }
   };
 
   const deleteFromFavorite = (index) => {
     let buff = [...favoritedPosts];
     buff.splice(index, 1);
-    setFavoritedPost(buff);
+    setFavoritedPosts(buff);
+    // let buff = [...favoritedPosts];
+    // buff.splice(index, 1);
+    // setFavoritedPost(buff);
   };
 
   React.useEffect(() => {
