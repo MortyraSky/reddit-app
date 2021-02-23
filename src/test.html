@@ -1,0 +1,44 @@
+<!-- https://external-preview.redd.it/aeehA-Ht_n7uXeWi-QJ4H-7om7CVzLutemUdOPu8vX8.png?width=640&amp;crop=smart&amp;format=pjpg&amp;auto=webp&amp;s=ece01a9864219230d68ce1c81becec03f88bc536 -->
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf8" />
+    <title>Бесконечный скроллинг с JavaScript</title>
+</head>
+
+<body>
+    <div id="infinite-scroll">
+        <div>
+            <video
+                poster="https://external-preview.redd.it/aeehA-Ht_n7uXeWi-QJ4H-7om7CVzLutemUdOPu8vX8.png?width=640&amp;crop=smart&amp;format=pjpg&amp;auto=webp&amp;s=ece01a9864219230d68ce1c81becec03f88bc536"
+                controls>
+                <source src="https://v.redd.it/o44wil5zc0j61/DASH_1080.mp4?source=fallback">
+            </video>
+            <script>
+                for (let i = 0; i < 100; i++)
+                    document.write("<div>Случайный текст или еще, что то</div>");
+            </script>
+        </div>
+    </div>
+    <script>
+        window.addEventListener("scroll", function () {
+
+            var block = document.getElementById('infinite-scroll');
+            var counter = 1;
+
+            var contentHeight = block.offsetHeight; // 1) высота блока контента вместе с границами
+            var yOffset = window.pageYOffset; // 2) текущее положение скролбара
+            var window_height = window.innerHeight; // 3) высота внутренней области окна документа
+            var y = yOffset + window_height;
+
+            // если пользователь достиг конца
+            if (y >= contentHeight) {
+                //загружаем новое содержимое в элемент
+                block.innerHTML = block.innerHTML + "<div>Случайный текст или еще, что то</div>";
+            }
+        });
+    </script>
+</body>
+
+</html>
