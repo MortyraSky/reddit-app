@@ -29,6 +29,12 @@ const App = () => {
         setIsLoaded(true);
       }).catch((err) => console.log(err));
   }, []);
+   
+  React.useEffect(() => {
+    let debouncedScroll = debounce(infinityScroll, 500);
+    window.addEventListener("scroll", debouncedScroll);
+    return () => window.removeEventListener('scroll', debouncedScroll)
+  }, []);
 
   const infinityScroll = () => {
     let block = document.querySelector('.App');
@@ -79,12 +85,6 @@ const App = () => {
     // buff.splice(index, 1);
     // setFavoritedPost(buff);
   };
-
-  React.useEffect(() => {
-    let debouncedScroll = debounce(infinityScroll, 500);
-    window.addEventListener("scroll", debouncedScroll);
-    return () => window.removeEventListener('scroll', debouncedScroll)
-  });
 
   return (
     <div className="App">
